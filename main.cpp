@@ -1,8 +1,10 @@
 #include <iostream>
+#include <cstdlib>
 #include <cmath>
+#include <time.h>
 using namespace std;
 
-long calcRecursiv(int n){
+long long calcRecursiv(int n){
 	if(n <= 2){
 		return 1;
 	} else {
@@ -31,9 +33,13 @@ long long calcMoivet(int n){
 }
 
 int main(){
-	int n=50;
+	int n=100;
+
+	timespec timeStart, timeEnd;
+	clock_gettime(CLOCK_REALTIME, &timeStart);
+
 	cout<<calcRecursiv(n)<<endl;
-	//cout<<calcIterative(n)<<endl;
-	//cout<<calcMoivet(n)<<endl;
-	return 0;
+
+	clock_gettime(CLOCK_REALTIME, &timeEnd);
+	cout << timeEnd.tv_nsec - timeStart.tv_nsec << endl;
 }
