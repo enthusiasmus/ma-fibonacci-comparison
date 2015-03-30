@@ -1,0 +1,28 @@
+{
+  "name": "NodeJS-Fibonacci-Comparison",
+  "version": "0.0.1",
+  "description": "Comparision of three different algorithms to calculate the n-th fibonacci number in node.js",
+  "main": "fibonacci_comparision.js",
+  "dependencies": {
+    "bignum": "~0.9.2",
+    "threads_a_gogo": "~0.1.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MMTLukas/nodejs-fibonacci-comparison.git"
+  },
+  "keywords": [
+    "fibonacci",
+    "node",
+    "comparision"
+  ],
+  "author": "L.W.",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/MMTLukas/nodejs-fibonacci-comparison/issues"
+  }
+}
