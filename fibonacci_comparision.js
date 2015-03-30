@@ -1,25 +1,23 @@
+var bignum = require("bignum");
+var threads = require("threads_a_gogo");
+
 function calcFibonacciRecursive(n) {
   if (n <= 2) {
     return 1;
   } else {
-    return calcFibonacciRecursive(n - 1) + calcFibonacciRecursive(n - 2);
+    var temp1 = bignum(calcFibonacciRecursive(n - 1));
+    var temp2 = bignum(calcFibonacciRecursive(n - 2));
+    return temp1.add(temp2);
   }
 }
 
-function calcFibonacciMoivreBinet(n) {
-  var firstFraction = 1 / Math.sqrt(5);
-  var secondFraction = Math.pow((1 + Math.sqrt(5)) / 2, n);
-  var thirdFraction = Math.pow((1 - Math.sqrt(5)) / 2, n);
-  return Math.round(firstFraction * (secondFraction - thirdFraction));
-}
-
 function calcFibonacciIterative(n) {
-  var firstFN = 1;
-  var secondFN = 1;
-  var finalNumber;
+  var firstFN = bignum(1);
+  var secondFN = bignum(1);
+  var finalNumber = bignum(1)
 
   for (var i = 3; i <= n; i++) {
-    var finalNumber = firstFN + secondFN;
+    var finalNumber = firstFN.add(secondFN);
     secondFN = firstFN;
     firstFN = finalNumber;
   }
@@ -27,6 +25,13 @@ function calcFibonacciIterative(n) {
   return finalNumber;
 }
 
-for (var i = 100; i <= 1000000; i = i * 10) {
-  console.log(calcFibonacciMoivreBinet(i));
-}
+var start = 1;
+var end = 40;
+
+//for (var i = start; i <= end; i++) {
+ // console.log(calcFibonacciRecursive(40).toString());
+//}
+
+//for (var i = start; i <= end; i++) {
+ // console.log(calcFibonacciIterative(40).toString());
+//}
