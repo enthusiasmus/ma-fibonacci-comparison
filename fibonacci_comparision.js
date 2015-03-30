@@ -1,17 +1,21 @@
-var threadRecursive = require('threads_a_gogo').create();
+var threadRecursive = require('threads_a_gogo').create().destroy();
 var threadIterative = require('threads_a_gogo').create();
 var threadMoivet = require('threads_a_gogo').create();
 
 //get high resolution timestamp from the node process
 var timestampStart = process.hrtime();
 
+var nthFibonacci = 8000;
+
 /**
  *
  * RECURSIV
  *
  **/
+var k = 0;
 
-function calcFibonacciRecursive(n){
+function calcFibonacciRecursive(n) {
+  console.log(k++);
   if (n <= 2) {
     return 1;
   } else {
@@ -22,17 +26,17 @@ function calcFibonacciRecursive(n){
 }
 
 //evaluate the function into the workers thread context
-threadRecursive.eval(calcFibonacciRecursive);
+/*threadRecursive.eval(calcFibonacciRecursive);
 
-//call the function with the expression to evaluate and the callback for the result
-threadRecursive.eval('calcFibonacciRecursive(40)', function(err, data) {
-  console.log("RECURSIVE");
-  console.log(data);
+ //call the function with the expression to evaluate and the callback for the result
+ threadRecursive.eval('calcFibonacciRecursive(40)', function(err, data) {
+ console.log("RECURSIVE");
+ console.log(data);
 
-  var duration = process.hrtime(timestampStart);
-  console.log(duration[0] + "sec " + duration[1] + "ns\n");
-  threadRecursive.destroy();
-});
+ var duration = process.hrtime(timestampStart);
+ console.log(duration[0] + "sec " + duration[1] + "ns\n");
+ threadRecursive.destroy();
+ });*/
 
 /**
  *
@@ -45,7 +49,7 @@ function calcFibonacciIterative(n) {
   var secondFN = 1;
   var finalNumber = 1;
   for (var i = 3; i <= n; i++) {
-    var finalNumber = firstFN + secondFN;
+    finalNumber = firstFN + secondFN;
     secondFN = firstFN;
     firstFN = finalNumber;
   }
@@ -53,7 +57,7 @@ function calcFibonacciIterative(n) {
   return finalNumber;
 }
 
-threadIterative.on("data", function(number){
+threadIterative.on("data", function (number) {
   console.log(number);
 })
 
@@ -61,13 +65,13 @@ threadIterative.on("data", function(number){
 threadIterative.eval(calcFibonacciIterative);
 
 //call the function with the expression to evaluate and the callback for the result
-threadIterative.eval('calcFibonacciIterative(40)', function(err, data) {
+threadIterative.eval('calcFibonacciIterative(' + nthFibonacci + ')', function (err, data) {
   console.log("ITERATIVE");
   console.log(data);
 
   var duration = process.hrtime(timestampStart);
   console.log(duration[0] + "sec " + duration[1] + "ns\n");
-  threadIterative.destroy();
+  this.destroy();
 });
 
 /**
@@ -87,11 +91,22 @@ function calcFibonacciMoivreBinet(n) {
 threadMoivet.eval(calcFibonacciMoivreBinet);
 
 //call the function with the expression to evaluate and the callback for the result
-threadMoivet.eval('calcFibonacciMoivreBinet(40)', function(err, data) {
+threadMoivet.eval('calcFibonacciMoivreBinet(' + nthFibonacci + ')', function (err, data) {
   console.log("MOIVET");
   console.log(data);
 
   var duration = process.hrtime(timestampStart);
   console.log(duration[0] + "sec " + duration[1] + "ns\n");
-  threadMoivet.destroy();
+  this.destroy();
 });
+
+
+/*
+for (var k = 0; k < 5; k++) {
+  for (var i = 1; i < 1000000; i *= 10) {
+    console.log(calcFibonacciIterative(i), i);
+    console.log(calcFibonacciMoivreBinet(i), i);
+  }
+}*/
+
+console.log(calcFibonacciRecursive(10));
