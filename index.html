@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fibonacci Comparison</title>
+    <link href="css/c3.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="chart"></div>
+
+<!-- Load d3.js and c3.js -->
+<script src="js/d3.js" charset="utf-8"></script>
+<script src="js/c3.js"></script>
+<script type="text/javascript" rel="script">
+
+    var valuesX = ['x', 100, 1000, 10000, 100000, 1000000];
+    var valuesIterative = ['Iterative', 12821.4, 15414.8, 376021.2, 277641, 2735049];
+    var valuesBinet = ['Binet', 1233878, 339138, 383452, 1508899, 8461694];
+    var valuesMatrix = ['Matrix', 129337.8, 32542.2, 9230470.8, 116528.8, 4070672.4];
+
+    for (var i = 1; i < valuesX.length; i++) {
+        valuesX[i] = Math.log(valuesX[i]) / Math.LN10;
+        valuesIterative[i] = Math.log(valuesIterative[i]) / Math.LN10;
+        valuesBinet[i] = Math.log(valuesBinet[i]) / Math.LN10;
+        valuesMatrix[i] = Math.log(valuesMatrix[i]) / Math.LN10;
+    }
+
+    window.onload = function () {
+        var chart = c3.generate({
+            bindto: '#chart',
+            padding: {
+                top: 10,
+                right: 20
+            },
+            data: {
+                x: 'x',
+                columns: [
+                    valuesX,
+                    valuesIterative,
+                    valuesBinet,
+                    valuesMatrix
+                ],
+                labels: {
+                    format: function (v, id, i, j) {
+                        return (Math.pow(10, v) / 1000000).toFixed(5) + " ms";
+                    }
+                }
+            },
+            axis: {
+                y: {
+                    label: {
+                        text: "Duration [ms]",
+                        position: "outer-middle"
+                    },
+                    tick: {
+                        format: function (d) {
+                            return (Math.pow(10, d) / 1000000).toFixed(5) + " ms";
+                        }
+                    }
+                },
+                x: {
+                    label: {
+                        text: "N-th fibonacci number",
+                        position: "outer-center"
+                    },
+                    tick: {
+                        format: function (d) {
+                            return Math.pow(10, d).toFixed(0);
+                        }
+                    }
+                }
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
