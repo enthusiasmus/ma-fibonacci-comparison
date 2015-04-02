@@ -132,7 +132,7 @@ var fibonacciCalculator = {
     var measurements = [];
     for (var j = start; j <= end; j *= 10) {
       var resultsRuns = [];
-      for (var i = 0; i < 1; i++) {
+      for (var i = 0; i < runs; i++) {
         var timeStart = process.hrtime();
         var number = calcFunction(j);
         //console.log(number);
@@ -184,11 +184,10 @@ Math.average = function (array) {
   }
   return average / array.length;
 };
+
 /*
 fibonacciCalculator.printMeasurementsIterative();
 fibonacciCalculator.printMeasurementsMatrix();
 fibonacciCalculator.printMeasurementsMoivet();
 fibonacciCalculator.printMeasurementsRecursionWithMemoization();
 */
-
-fibonacciCalculator.printMeasurementsRecursionWithMemoization();

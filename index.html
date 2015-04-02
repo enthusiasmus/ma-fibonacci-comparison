@@ -14,15 +14,20 @@
 <script type="text/javascript" rel="script">
 
     var valuesX = ['x', 100, 1000, 10000, 100000, 1000000];
-    var valuesIterative = ['Iterative', 2007441, 2050005, 24909175, 1700853238, 177234260530 ];
-    var valuesBinet = ['Binet', 3859117, 1770171, 1435698, 1828432, 18821345 ];
-    var valuesMatrix = ['Matrix', 3679201, 1606858, 8315033, 476851789, 47779581758 ];
+    var valuesIterative = ['Iterative Calculation', 2007441, 2050005, 24909175, 1700853238, 177234260530];
+    var valuesBinet = ['Moivre-Binet Formula', 3859117, 1770171, 1435698, 1828432, 18821345];
+    var valuesMatrix = ['Matrix Calculation', 3679201, 1606858, 8315033, 476851789, 47779581758];
+    var valuesMemoization = ['Recursive with Memoization', 117491, 902701, 2445698, 30639532];
 
     for (var i = 1; i < valuesX.length; i++) {
         valuesX[i] = Math.log(valuesX[i]) / Math.LN10;
         valuesIterative[i] = Math.log(valuesIterative[i]) / Math.LN10;
         valuesBinet[i] = Math.log(valuesBinet[i]) / Math.LN10;
         valuesMatrix[i] = Math.log(valuesMatrix[i]) / Math.LN10;
+
+        if (typeof valuesMemoization[i] != "undefined") {
+            valuesMemoization[i] = Math.log(valuesMemoization[i]) / Math.LN10;
+        }
     }
 
     window.onload = function () {
@@ -32,13 +37,17 @@
                 top: 10,
                 right: 20
             },
+            size: {
+                height: 600
+            },
             data: {
                 x: 'x',
                 columns: [
                     valuesX,
                     valuesIterative,
                     valuesBinet,
-                    valuesMatrix
+                    valuesMatrix,
+                    valuesMemoization
                 ],
                 labels: {
                     format: function (v, id, i, j) {
@@ -54,7 +63,7 @@
                     },
                     tick: {
                         format: function (d) {
-                            return (Math.pow(10, d) / 1000000).toFixed(5) + " ms";
+                            return (Math.pow(10, d) / 1000000).toFixed(2) + " ms";
                         }
                     }
                 },
