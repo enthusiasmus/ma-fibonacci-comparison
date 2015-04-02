@@ -185,9 +185,7 @@ Math.average = function (array) {
   return average / array.length;
 };
 
-/*
 fibonacciCalculator.printMeasurementsIterative();
 fibonacciCalculator.printMeasurementsMatrix();
 fibonacciCalculator.printMeasurementsMoivet();
 fibonacciCalculator.printMeasurementsRecursionWithMemoization();
-*/
