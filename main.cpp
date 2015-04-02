@@ -41,5 +41,6 @@ int main(){
 	cout<<calcRecursiv(n)<<endl;
 
 	clock_gettime(CLOCK_REALTIME, &timeEnd);
-	cout << timeEnd.tv_nsec - timeStart.tv_nsec << endl;
+	long long ns = ((timeEnd.tv_sec - timeStart.tv_sec)*1000000000 + timeEnd.tv_nsec - timeStart.tv_nsec);
+	cout << ns/pow(10, 9) << " sec" << endl;
 }
