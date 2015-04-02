@@ -86,30 +86,30 @@ var fibonacciCalculator = {
    **/
 
   calcFibonacciMatrix: function (n) {
-    m = [[1, 0], [0, 1]];
-    odd = [[1, 1], [1, 0]];
+    var m = [[new BigNumber(1), new BigNumber(0)], [new BigNumber(0), new BigNumber(1)]];
+    var odd = [[new BigNumber(1), new BigNumber(1)], [new BigNumber(1), new BigNumber(0)]];
+
     var matrix = function (a, b) {
-      /*
-       Matrix multiplication
-       Strassen Algorithm
-       Only works with 2x2 matrices.
-       */
-      c = [[0, 0], [0, 0]];
-      c[0][0] = (a[0][0] * b[0][0]) + (a[0][1] * b[1][0]);
-      c[0][1] = (a[0][0] * b[0][1]) + (a[0][1] * b[1][1]);
-      c[1][0] = (a[1][0] * b[0][0]) + (a[1][1] * b[1][0]);
-      c[1][1] = (a[1][0] * b[0][1]) + (a[1][1] * b[1][1]);
-      m1 = (a[0][0] + a[1][1]) * (b[0][0] + b[1][1]);
-      m2 = (a[1][0] + a[1][1]) * b[0][0];
-      m3 = a[0][0] * (b[0][1] - b[1][1]);
-      m4 = a[1][1] * (b[1][0] - b[0][0]);
-      m5 = (a[0][0] + a[0][1]) * b[1][1];
-      m6 = (a[1][0] - a[0][0]) * (b[0][0] + b[0][1]);
-      m7 = (a[0][1] - a[1][1]) * (b[1][0] + b[1][1]);
-      c[0][0] = m1 + m4 - m5 + m7;
-      c[0][1] = m3 + m5;
-      c[1][0] = m2 + m4;
-      c[1][1] = m1 - m2 + m3 + m6;
+      var c = [[0, 0], [0, 0]];
+
+      c[0][0] = a[0][0].mul(b[0][0]).add(a[0][1].mul(b[1][0]));
+      c[0][1] = a[0][0].mul(b[0][1]).add(a[0][1].mul(b[1][1]));
+      c[1][0] = a[1][0].mul(b[0][0]).add(a[1][1].mul(b[1][0]));
+      c[1][1] = a[1][0].mul(b[0][1]).add(a[1][1].mul(b[1][1]));
+
+      var m1 = a[0][0].add(a[1][1]).mul(b[0][0].add(b[1][1]));
+      var m2 = a[1][0].add(a[1][1]).mul(b[0][0]);
+      var m3 = a[0][0].mul(b[0][1].sub(b[1][1]));
+      var m4 = a[1][1].mul(b[1][0].sub(b[0][0]));
+      var m5 = a[0][0].add(a[0][1]).mul(b[1][1]);
+      var m6 = a[1][0].sub(a[0][0]).mul(b[0][0].add(b[0][1]));
+      var m7 = a[0][1].sub(a[1][1]).mul(b[1][0].add(b[1][1]));
+
+      c[0][0] = m1.add(m4).sub(m5).add(m7);
+      c[0][1] = m3.add(m5);
+      c[1][0] = m2.add(m4);
+      c[1][1] = m1.sub(m2).add(m3).add(m6);
+
       return c;
     };
 
@@ -117,6 +117,7 @@ var fibonacciCalculator = {
       mat(n - 1);
       return m[0][0];
     };
+
     var mat = function (n) {
       if (n > 1) {
         mat(n / 2);
@@ -124,7 +125,8 @@ var fibonacciCalculator = {
       }
       m = (n % 2 < 1) ? m : matrix(m, odd);
     };
-    return fib(n);
+
+    return fib(n).toFixed(0).toString();
   },
   measure: function (calcFunction, start, end, runs) {
     var measurements = [];
@@ -157,13 +159,13 @@ var fibonacciCalculator = {
     var measurements = this.measure(this.calcFibonacciMatrix, Math.pow(10, 2), Math.pow(10, 6), 5);
     console.log(measurements);
   },
-  printMeasurmentsRecursionWithMemoization: function () {
+  printMeasurementsRecursionWithMemoization: function () {
     try {
       this.memo = [0, 1];
       var measurements = this.measure(
         this.calcFibonacciRecursiveWithMemoization,
         Math.pow(10, 2),
-        Math.pow(10, 6),
+        Math.pow(10, 5),
         1
       );
     }
@@ -182,14 +184,11 @@ Math.average = function (array) {
   }
   return average / array.length;
 };
+/*
+fibonacciCalculator.printMeasurementsIterative();
+fibonacciCalculator.printMeasurementsMatrix();
+fibonacciCalculator.printMeasurementsMoivet();
+fibonacciCalculator.printMeasurementsRecursionWithMemoization();
+*/
 
-//fibonacciCalculator.printMeasurementsIterative();
-/*fibonacciCalculator.printMeasurementsMoivet();
-
- fibonacciCalculator.printMeasurementsMatrix();
- fibonacciCalculator.printMeasurmentsRecursionWithMemoization();*/
-
-
-
-console.log(fibonacciCalculator.calcFibonacciIterative(Math.pow(10,6)));
-
+fibonacciCalculator.printMeasurementsRecursionWithMemoization();
