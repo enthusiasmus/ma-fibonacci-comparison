@@ -13,17 +13,25 @@
 <script src="js/c3.js"></script>
 <script type="text/javascript" rel="script">
 
+    // 1st Chart
+    // LN x-axis
     var valuesX = ['x', 100, 1000, 10000, 100000, 1000000];
     var valuesIterative = ['Iterative Calculation', 2007441, 2050005, 24909175, 1700853238, 177234260530];
     var valuesBinet = ['Moivre-Binet Formula', 3859117, 1770171, 1435698, 1828432, 18821345];
     var valuesMatrix = ['Matrix Calculation', 3679201, 1606858, 8315033, 476851789, 47779581758];
-    var valuesMemoization = ['Recursive with Memoization', 117491, 902701, 2445698, 30639532];
+    var valuesMemoization = ['Recursive with Memoization', 104660, 820131, 2420277, 30683158 ];
+
+    // 2nd Chart
+    // Normal x-axis
+    // var valuesX = ['x', 5, 10, 15, 20, 25, 30, 35, 40 ];
+    var valuesRecursive = ['Recursive Calculation', 10891, 121498, 11994, 129518, 1467031, 16072731, 177086841,2137319077 ];
 
     for (var i = 1; i < valuesX.length; i++) {
         valuesX[i] = Math.log(valuesX[i]) / Math.LN10;
         valuesIterative[i] = Math.log(valuesIterative[i]) / Math.LN10;
         valuesBinet[i] = Math.log(valuesBinet[i]) / Math.LN10;
         valuesMatrix[i] = Math.log(valuesMatrix[i]) / Math.LN10;
+        valuesRecursive[i] = Math.log(valuesRecursive[i]) / Math.LN10;
 
         if (typeof valuesMemoization[i] != "undefined") {
             valuesMemoization[i] = Math.log(valuesMemoization[i]) / Math.LN10;

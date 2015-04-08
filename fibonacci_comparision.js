@@ -128,9 +128,10 @@ var fibonacciCalculator = {
 
     return fib(n).toFixed(0).toString();
   },
-  measure: function (calcFunction, start, end, runs) {
+  measure: function (calcFunction, start, end, runs, steps, callback) {
+    var steps = steps || 10;
     var measurements = [];
-    for (var j = start; j <= end; j *= 10) {
+    for (var j = start; j <= end; j += steps) {
       var resultsRuns = [];
       for (var i = 0; i < runs; i++) {
         var timeStart = process.hrtime();
@@ -145,7 +146,16 @@ var fibonacciCalculator = {
       measurements.push(average);
     }
 
+    if(typeof callback == "function"){
+      callback();
+    }
+
     return measurements;
+  },
+  printMeasurementsRecursive: function () {
+    // Need to change j*=steps into j+=steps
+    var measurements = this.measure(this.calcFibonacciRecursive, 5, 40, 5, 5);
+    console.log(measurements);
   },
   printMeasurementsIterative: function () {
     var measurements = this.measure(this.calcFibonacciIterative, Math.pow(10, 2), Math.pow(10, 6), 5);
@@ -161,12 +171,15 @@ var fibonacciCalculator = {
   },
   printMeasurementsRecursionWithMemoization: function () {
     try {
-      this.memo = [0, 1];
       var measurements = this.measure(
         this.calcFibonacciRecursiveWithMemoization,
         Math.pow(10, 2),
         Math.pow(10, 5),
-        1
+        1,
+        10,
+        function(){
+          this.memo = [0, 1];
+        }.bind(this)
       );
     }
     catch (e) {
@@ -185,7 +198,7 @@ Math.average = function (array) {
   return average / array.length;
 };
 
-fibonacciCalculator.printMeasurementsIterative();
-fibonacciCalculator.printMeasurementsMatrix();
-fibonacciCalculator.printMeasurementsMoivet();
-fibonacciCalculator.printMeasurementsRecursionWithMemoization();
+//fibonacciCalculator.printMeasurementsIterative();
+//fibonacciCalculator.printMeasurementsMatrix();
+//fibonacciCalculator.printMeasurementsMoivet();
+fibonacciCalculator.printMeasurementsRecursive();
